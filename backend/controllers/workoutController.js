@@ -29,7 +29,9 @@ const createWorkout = async (req, res) => {
 */
 const getWorkouts = async (req, res) => {
   try {
-    const workouts = await await Workout.find().select(["-__v"]);
+    const workouts = await await Workout.find()
+      .select(["-__v"])
+      .sort({ createdAt: -1 });
     res.status(200).json(workouts);
   } catch (error) {
     console.log("Error in: ".red, req.path.red, req.method.red);
