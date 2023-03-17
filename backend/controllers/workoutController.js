@@ -9,6 +9,11 @@ const Workout = require("../models/workoutModel");
 const createWorkout = async (req, res) => {
   try {
     const { title, reps, weight } = req.body;
+
+    if (!title || !reps || !weight) {
+      return res.status(400).json({ msg: "Fill in all fields" });
+    }
+
     const workout = await Workout.create({
       title,
       reps,

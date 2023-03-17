@@ -21,7 +21,7 @@ const Home = () => {
     };
     fetchedWorkouts();
     console.log("From useEffect");
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="home">
