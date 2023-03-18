@@ -102,3 +102,12 @@ div.error {
 .deleting {
   color: #1aac83;
 }
+
+#edit {
+  margin-top: 45px;
+}
+
+#cancel {
+  margin-left: 15px;
+  background-color: #555;
+}

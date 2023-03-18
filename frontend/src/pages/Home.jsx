@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 
 // components
@@ -7,6 +7,19 @@ import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
   const { workouts, dispatch } = useWorkoutsContext();
+
+  const [edit, setEdit] = useState(false);
+  const [editWorkout, setEditWorkout] = useState(null);
+
+  function handleChildEdit(childData) {
+    console.log(childData);
+    setEdit(childData.edit);
+    setEditWorkout(childData.workout);
+  }
+  const handleFormCancel = () => {
+    setEdit(false);
+    setEditWorkout(null);
+  };
 
   //fire fn. when component rendered
   // if dependency array is empty then the use effect will fire on rendering the component only
@@ -28,10 +41,24 @@ const Home = () => {
       <div className="workouts">
         {workouts &&
           workouts.map((workout) => {
-            return <WorkoutDetails workout={workout} key={workout._id} />;
+            return (
+              <WorkoutDetails
+                workout={workout}
+                key={workout._id}
+                onChildData={handleChildEdit}
+              />
+            );
           })}
       </div>
-      <WorkoutForm />
+
+      {!edit && <WorkoutForm />}
+      {edit && (
+        <WorkoutForm
+          edit={edit}
+          workout={editWorkout}
+          formCancel={handleFormCancel}
+        />
+      )}
     </div>
   );
 };

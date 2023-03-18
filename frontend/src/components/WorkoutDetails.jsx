@@ -3,7 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 
-const WorkoutDetails = ({ workout }) => {
+const WorkoutDetails = ({ workout, onChildData }) => {
   const { dispatch } = useWorkoutsContext();
 
   // const currentDate = new Date(workout.createdAt);
@@ -36,6 +36,13 @@ const WorkoutDetails = ({ workout }) => {
     }
   };
 
+  const editHandler = () => {
+    onChildData({
+      edit: true,
+      workout,
+    });
+  };
+
   return (
     <div className="workout-details">
       {deleting && <h3 className="deleting">Workout is being delete</h3>}
@@ -58,6 +65,13 @@ const WorkoutDetails = ({ workout }) => {
           </p>
           <span onClick={deleteHandler} className="material-symbols-outlined">
             Delete
+          </span>
+          <span
+            className="material-symbols-outlined"
+            id="edit"
+            onClick={editHandler}
+          >
+            Edit
           </span>
         </>
       )}
