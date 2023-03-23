@@ -7,6 +7,7 @@ const app = express();
 
 //routers
 const workoutRouter = require("./routes/workout");
+const userRouter = require("./routes/user");
 
 //middleware
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 
 //routes
 app.use("/api/workouts", workoutRouter);
+app.use("/api/user", userRouter);
 
 //DB connection
 
