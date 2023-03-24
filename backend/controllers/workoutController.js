@@ -14,10 +14,13 @@ const createWorkout = async (req, res) => {
       return res.status(400).json({ msg: "Fill in all fields" });
     }
 
+    const user = req.user._id;
+
     const workout = await Workout.create({
       title,
       reps,
       weight,
+      user,
     });
     res.status(201).json(workout);
   } catch (error) {
@@ -34,7 +37,8 @@ const createWorkout = async (req, res) => {
 */
 const getWorkouts = async (req, res) => {
   try {
-    const workouts = await await Workout.find()
+    const user = req.user._id;
+    const workouts = await await Workout.find({ user })
       .select(["-__v"])
       .sort({ createdAt: -1 });
     res.status(200).json(workouts);

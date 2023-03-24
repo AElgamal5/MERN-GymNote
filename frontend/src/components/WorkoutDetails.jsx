@@ -2,9 +2,11 @@ import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const WorkoutDetails = ({ workout, onChildData }) => {
   const { dispatch } = useWorkoutsContext();
+  const { user } = useAuthContext();
 
   // const currentDate = new Date(workout.createdAt);
   // const currentDayOfMonth = currentDate.getDate();
@@ -17,11 +19,15 @@ const WorkoutDetails = ({ workout, onChildData }) => {
   const [deleting, setDeleting] = useState(false);
 
   const deleteHandler = async () => {
+    if (!user) {
+      return;
+    }
     setDeleting(true);
     const response = await fetch(`/api/workouts/${workout._id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
